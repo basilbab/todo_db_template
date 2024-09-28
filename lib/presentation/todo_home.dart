@@ -58,14 +58,6 @@ class _ScreenTodoHomeState extends State<ScreenTodoHome> {
                       child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                id = id + 1;
-                                TodoModel t = TodoModel(
-                                    todoId: id.toString(),
-                                    todoName: todoController.text,
-                                    todoStatus: '0');
-                                todoModelList.add(t);
-                              });
                               todoController.text = '';
                             }
                           },
@@ -92,14 +84,27 @@ class _ScreenTodoHomeState extends State<ScreenTodoHome> {
                       },
                       leading: Text((index + 1).toString()),
                       title: Text(todoModelList[index].todoName),
-                      subtitle: Text(
-                        todoModelList[index].todoStatus == '0'
-                            ? 'Not Completed'
-                            : 'Completed',
-                        style: TextStyle(
-                            color: todoModelList[index].todoStatus == '0'
-                                ? Colors.red
-                                : Colors.green),
+                      subtitle: Row(
+                        children: [
+                          Text(
+                            todoModelList[index].todoStatus == '0'
+                                ? 'Not Completed'
+                                : 'Completed',
+                            style: TextStyle(
+                                color: todoModelList[index].todoStatus == '0'
+                                    ? Colors.red
+                                    : Colors.green),
+                          ),
+                          Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                todoController.text =
+                                    todoModelList[index].todoName;
+                              },
+                              icon: const Icon(Icons.edit)),
+                          IconButton(
+                              onPressed: () {}, icon: const Icon(Icons.delete)),
+                        ],
                       ),
                     );
                   },
